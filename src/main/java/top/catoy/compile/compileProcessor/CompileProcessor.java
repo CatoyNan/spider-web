@@ -1,5 +1,7 @@
 package top.catoy.compile.compileProcessor;
 
+import top.catoy.compile.entity.CompilationTask;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -23,6 +25,12 @@ public interface CompileProcessor {
     void setSource(StringBuffer source);
 
     /**
+     * 设置编译任务
+     * @param compilationTask
+     */
+    void setCompilationTask(CompilationTask compilationTask);
+
+    /**
      * 设置类所要用到的参数
      * @param args
      */
@@ -37,6 +45,6 @@ public interface CompileProcessor {
      * @param ops
      * @return
      */
-    Class<?> loadClass(String filePath, StringBuffer source, String className, ArrayList<String> ops);
+    Class<?> loadClass(String filePath, StringBuffer source, String className, ArrayList<String> ops) throws ClassNotFoundException;
 
 }

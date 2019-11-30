@@ -2,6 +2,7 @@ package com.catoy;
 
 import org.apache.log4j.Logger;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.text.DecimalFormat;
 
@@ -10,6 +11,7 @@ public class Hello {
     private final DecimalFormat df = new DecimalFormat("#.#####");
 
     public void calculate(Map<String, Double> data) {
-        int a = 1/0;
+        Map<String,String> map = new HashMap();
+        map.put("1","3");
     }
 }

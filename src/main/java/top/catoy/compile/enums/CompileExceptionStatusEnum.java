@@ -1,4 +1,4 @@
-package top.catoy.exception;
+package top.catoy.compile.enums;
 
 /**
  * @ClassName CompileExceptionStatusEnum
@@ -21,7 +21,28 @@ public enum CompileExceptionStatusEnum {
     /**
      * 编译源文件无效
      */
-    SOURCE_IS_NOT_VALID(1003, "source is not valid");
+    SOURCE_IS_NOT_VALID(1003, "source is not valid"),
+
+    /**
+     * 编译出错
+     */
+    SOURCE_COMPILE_ERROR(1004, "source compile error"),
+
+    /**
+     * 反射方法参数出错
+     */
+    INVOKE_ARGS_ERROR(1005, "invoke args error"),
+
+    /**
+     * 反射调用方法内部异常
+     */
+    INVOKE_Target_Exception(1006,"invoke target exception"),
+
+    /**
+     * 编译的类无法加载
+     */
+    CLASS_CAN_NOT_LOAD(1007,"class can not load");
+
 
     private int code;
 

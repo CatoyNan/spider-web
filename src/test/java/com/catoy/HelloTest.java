@@ -6,6 +6,7 @@ import top.catoy.compile.compileProcessor.DefaultCompileProcessor;
 import top.catoy.compile.entity.CompilationTask;
 import top.catoy.compile.util.ClassUtil;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +22,7 @@ import java.util.Map;
 public class HelloTest {
     private static final Logger logger = Logger.getLogger(HelloTest.class);
     @Test
-    public void compile() {
+    public void compile() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         StringBuilder sb = new StringBuilder();
         sb.append("package com.even.test;");
         sb.append("import org.apache.log4j.Logger;\n");
@@ -49,7 +50,7 @@ public class HelloTest {
     }
 
     @Test
-    public void test() {
+    public void test() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         StringBuffer sb = new StringBuffer();
         sb.append("package catoy.top;\n" +
                 "\n" +
@@ -59,14 +60,14 @@ public class HelloTest {
                 "import java.text.DecimalFormat;\n" +
                 "\n" +
                 "public class Hello {\n" +
-                "    private static final Logger logger = Logger.getLogger(Hello.class;\n" +
+                "    private static final Logger logger = Logger.getLogger(Hello.class);\n" +
                 "    private final DecimalFormat df = new DecimalFormat(\"#.#####\");\n" +
                 "\n" +
                 "    public vid calculate(Map<String, Double> data) {\n" +
-                "        int a = 1/0;\n" +
+                "       // int a = 1/0;\n" +
                 "    }\n" +
                 "}");
-
+        System.out.println(sb);
         Map<String,Double> data = new HashMap<String,Double>();
         data.put("f1", 10.0);
         data.put("f2", 20.0);
@@ -92,11 +93,8 @@ public class HelloTest {
 
     @Test
     public void helloUtil() {
-        Class<?> cls = CompilationTask.class;
-        Method[] method = cls.getMethods();
-        System.out.println();
-//        Object obj = cls.newInstance();
-//        result = method.invoke(obj, params);
+//
+        System.out.println("comipe error/Users/admin/Desktop/class/com/catoy/top.java:1: 错误: 类Hello是公共的, 应在名为 Hello.java 的文件中声明\\npackage catoy.top;import org.apache.log4j.Logger;import java.util.Map;import java.text.DecimalFormat;public class Hello {private static final Logger logger = Logger.getLogger(Hello.class);public vid calculate(Map<String, Double> data) {Systemout.println('a');}}\\n                                                                                                            ^\\n/Users/admin/Desktop/class/com/catoy/top.java:1: 错误: 找不到符号\\npackage catoy.top;import org.apache.log4j.Logger;import java.util.Map;import java.text.DecimalFormat;public class Hello {private static final Logger logger = Logger.getLogger(Hello.class);public vid calculate(Map<String, Double> data) {Systemout.println('a');}}\\n                                                                                                                                                                                                   ^\\n  符号:   类 vid\\n  位置: 类 catoy.top.Hello\\n/Users/admin/Desktop/class/com/catoy/top.java:1: 错误: 找不到符号\\npackage catoy.top;import org.apache.log4j.Logger;import java.util.Map;import java.text.DecimalFormat;public class Hello {private static final Logger logger = Logger.getLogger(Hello.class);public vid calculate(Map<String, Double> data) {Systemout.println('a');}}\\n                                                                                                                                                                                                                                            ^\\n  符号:   变量 Systemout\\n  位置: 类 catoy.top.Hello\\n");
     }
 
 }
