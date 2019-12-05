@@ -1,5 +1,6 @@
 package top.catoy.compile.entity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +22,10 @@ public class CompilationTask {
     private StringBuffer source;
 
     //方法参数
-    private Map<String,Object> data = new HashMap<>();
+    private ArrayList<Object> args;
+
+    //入口方法
+    private String methodName;
 
     public String getClassName() {
         return className;
@@ -43,15 +47,23 @@ public class CompilationTask {
         return source;
     }
 
+    public String getMethodName() {
+        return methodName;
+    }
+
+    public void setMethodName(String methodName) {
+        this.methodName = methodName;
+    }
+
     public void setSource(StringBuffer source) {
         this.source = source;
     }
 
-    public Map<String, Object> getData() {
-        return data;
+    public ArrayList<Object> getArgs() {
+        return args;
     }
 
-    public void setData(Map<String, Object> data) {
-        this.data = data;
+    public void setArgs(ArrayList<Object> args) {
+        this.args = args;
     }
 }

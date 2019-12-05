@@ -34,7 +34,7 @@ public interface CompileProcessor {
      * 设置类所要用到的参数
      * @param args
      */
-    void setArgs(Map<String, Object> args);
+    void setArgs(ArrayList<Object> args);
 
 
     /**

@@ -65,8 +65,8 @@ public class DefaultCompileProcessor implements CompileProcessor {
     }
 
     @Override
-    public void setArgs(Map<String, Object> args) {
-        compilationTask.setData(args);
+    public void setArgs(ArrayList<Object> args) {
+        compilationTask.setArgs(args);
     }
 
     @Override

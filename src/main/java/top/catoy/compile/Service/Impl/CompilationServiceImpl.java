@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import top.catoy.compile.Service.CompilationService;
 import top.catoy.compile.compileProcessor.CompileProcessor;
-import top.catoy.compile.compileProcessor.DefaultCompileProcessor;
 import top.catoy.compile.entity.CompilationTask;
 import top.catoy.compile.entity.CompileResponse;
 import top.catoy.compile.enums.CompileExceptionStatusEnum;
@@ -14,6 +13,7 @@ import top.catoy.exception.CompileException;
 
 import javax.annotation.Resource;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Map;
 
 /**
@@ -37,7 +37,7 @@ public class CompilationServiceImpl implements CompilationService {
         try {
             cls = defaultCompileProcessor.run();
         } catch (CompileException e) {
-            logger.error(e.getMessage(), e);
+            logger.error("CompileException",e);
             if (e.getCode() == CompileExceptionStatusEnum.SOURCE_COMPILE_ERROR.getCode() ||
                     e.getCode() == CompileExceptionStatusEnum.INVOKE_Target_Exception.getCode()) {
                 return new CompileResponse(ResponseStatusEnum.COMPILE_ERROR.getCode(), ResponseStatusEnum.COMPILE_ERROR.getMessage(), e.getMessage());
@@ -54,7 +54,25 @@ public class CompilationServiceImpl implements CompilationService {
 
         try {
             //执行测试方法
-            result = execute(cls, "calculate", new Class[]{Map.class}, new Object[]{compilationTask.getData()});
+            String methodName = compilationTask.getMethodName();
+            Method[] ms = cls.getMethods();
+            Class<?> returnType = null;
+            Class<?>[] paramTypes  = null;
+            for (int i = 0; i < ms.length; i++) {
+                if (ms[i].getName().equals(methodName)) {
+                    // 得到方法的返回值类型的类类型
+                    returnType = ms[i].getReturnType();
+                    System.out.print(returnType.getName() + " ");
+                    // 获取参数类类型数组
+                    paramTypes = ms[i].getParameterTypes();
+                    for (Class class2 : paramTypes) {
+                        System.out.print(class2.getName() + ",");
+                    }
+                    System.out.println(")");
+                    break;
+                }
+            }
+            result = execute(cls, methodName, paramTypes, compilationTask.getArgs().toArray());
         } catch (IllegalArgumentException e) {
             logger.error(e.toString(), e);
             return new CompileResponse(ResponseStatusEnum.INVOKE_ERROR.getCode(), ResponseStatusEnum.INVOKE_ERROR.getMessage(), e.getMessage());

@@ -11,6 +11,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -47,12 +48,10 @@ public class ClassUtil {
         try {
             //创建诊断信息监听器
             DiagnosticCollector<JavaFileObject> diagnosticListeners = new DiagnosticCollector<>();
-            manager = compiler.getStandardFileManager(diagnosticListeners, null, null);
+            manager = compiler.getStandardFileManager(null, null, null);
             Iterable<? extends JavaFileObject> it = manager.getJavaFileObjects(files);
             JavaCompiler.CompilationTask task = compiler.getTask(null, manager, diagnosticListeners, ops, null, it);
-            task.call();
-
-            if (diagnosticListeners.getDiagnostics().size() > 0) {
+            if(!task.call()) {
                 for (Diagnostic<? extends JavaFileObject> diagnostic : diagnosticListeners.getDiagnostics()) {
                     //可以在此处自定义编译诊(错误)断信息的输出格式
                     stringBuffer.append(diagnostic.toString() + "\n");
@@ -164,11 +163,33 @@ public class ClassUtil {
      * @return
      */
     public static Object invoke(Class<?> cls, String methodName, Class<?>[] paramsCls, Object[] params) throws NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException, IllegalArgumentException {
-        Object result = null;
+        Object result;
         Method method = cls.getDeclaredMethod(methodName, paramsCls);
         Object obj = cls.newInstance();
         result = method.invoke(obj, params);
         return result;
     }
 
+    /**
+     * Object[] 转换成制定类型数组
+     * @param targetType
+     * @param arrayObjects
+     * @param <T>
+     * @return
+     */
+    public static <T> T[] convertArray(Class<T> targetType, Object[] arrayObjects) {
+        if (targetType == null) {
+            return (T[]) arrayObjects;
+        }
+        if (arrayObjects == null) {
+            return null;
+        }
+        T[] targetArray = (T[]) Array.newInstance(targetType, arrayObjects.length);
+        try {
+            System.arraycopy(arrayObjects, 0, targetArray, 0, arrayObjects.length);
+        } catch (ArrayStoreException e) {
+            e.printStackTrace();
+        }
+        return targetArray;
+    }
 }
