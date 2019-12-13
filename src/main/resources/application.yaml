@@ -45,3 +45,22 @@
 #        linux-backupPath: /backup/
 #        max-backupPath: /Users/admin/work/test/backup/
 #        keys: fourzeroeight
+#rabbitmq:
+#  host: 127.0.0.1
+#  port: 5672
+#  username: admin
+#  password: admin
+#  virtual-host: /
+#  publisher-confirms: true
+  logging:
+    config: classpath:log4j.xml
+#level:
+#      root: debug
+##      com.bestvike: debug
+##      org.springframework.security: warn
+#    # 默认日志文件名
+#    # file: log
+#    # 默认日志路径
+#    # path: ./log
+#    # logback.xml路径，默认为classpath:logback.xml
+#     config: ./log4j.properties

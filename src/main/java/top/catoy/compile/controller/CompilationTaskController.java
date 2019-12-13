@@ -1,10 +1,16 @@
 package top.catoy.compile.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.catoy.compile.Service.CompilationService;
 import top.catoy.compile.entity.CompilationTask;
 import top.catoy.compile.entity.CompileResponse;
+import top.catoy.compile.enums.ResponseStatusEnum;
+
+import java.util.ArrayList;
 
 /**
  * @ClassName CompilationTaskController
@@ -16,6 +22,7 @@ import top.catoy.compile.entity.CompileResponse;
 @RestController
 @RequestMapping("/compilationtask")
 public class CompilationTaskController {
+    private static final Logger logger = LoggerFactory.getLogger(CompilationTaskController.class);
     @Autowired
     CompilationService compilationService;
     /**
@@ -23,12 +30,63 @@ public class CompilationTaskController {
      * @return
      */
     @GetMapping("/getAllCompilationTasksByUserId")
-    public String hello() {
-        return "hello";
+    public CompileResponse hello() {
+        System.out.println("134");
+        CompilationTask compilationTask = new CompilationTask();
+        CompilationTask compilationTask2 = new CompilationTask();
+
+        compilationTask.setMethodName("calculate");
+        compilationTask2.setMethodName("calculate");
+
+        ArrayList<Object> objects = new ArrayList<>();
+        objects.add("hello");
+        compilationTask.setArgs(objects);
+        compilationTask2.setArgs(objects);
+
+        StringBuffer stringBuffer = new StringBuffer("package com.catoy.topp;\n" +
+                "import org.apache.log4j.Logger;\n" +
+                "public class Hello{\n" +
+                " /**\n" +
+                " * 主入口\n" +
+                " **/\n" +
+                "  public Result calculate(String data,String data2){\n" +
+                "    System.out.println(\"123\");\n" +
+//                "    Result r = new Result();\n" +
+//                "    r.result = data.url + data.name;\n" +
+                "    return null;\n" +
+                "  }\n" +
+                "  \n" +
+                "  /**\n" +
+                "  * 数据\n" +
+                "  **/\n" +
+                "  class Data{\n" +
+                "    String url;\n" +
+                "    String name;\n" +
+                "  }\n" +
+                "  \n" +
+                "  /**\n" +
+                "  * 输出格式\n" +
+                "  **/\n" +
+                "  class Result{\n" +
+                "    String result;\n" +
+                "  }\n" +
+                "}");
+        compilationTask.setSource(stringBuffer);
+        compilationTask2.setSource(stringBuffer);
+        ArrayList<CompilationTask> compilationTasks = new ArrayList<>();
+        compilationTask.setId(1001);
+        compilationTask2.setId(2001);
+        compilationTasks.add(compilationTask);
+        compilationTasks.add(compilationTask2);
+
+        compilationTask.setClassName("Hello.java");
+        compilationTask2.setClassName("Hello.java");
+        return new CompileResponse(ResponseStatusEnum.SUCCESS.getCode(),ResponseStatusEnum.SUCCESS.getMessage(),compilationTasks);
     }
 
     @PostMapping("/compile")
-    public CompileResponse compile (@RequestBody CompilationTask compilationTask) {
+    public CompileResponse compile (@RequestBody @Validated CompilationTask compilationTask) {
+        logger.info("compilationTask={}",compilationTask);
         return compilationService.compile(compilationTask);
     }
 

@@ -1,8 +1,10 @@
 package top.catoy.compile.Service;
 
+import top.catoy.compile.entity.CompilationResult;
 import top.catoy.compile.entity.CompilationTask;
 import top.catoy.compile.entity.CompileResponse;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 
 /**
@@ -23,12 +25,9 @@ public interface CompilationService {
 
     /**
      * 执行类文件
-     * @param cls 类
-     * @param methodName 方法名
-     * @param paramsCls 方法参数类型
-     * @param params 方法参数
+     * @param compilationTask
      * @return
      */
-     Object execute(Class<?> cls,String methodName,Class<?>[] paramsCls,Object[] params) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException;
+     CompilationResult execute(CompilationTask compilationTask) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, UnsupportedEncodingException;
 
 }
