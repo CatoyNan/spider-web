@@ -180,13 +180,18 @@ public class ClassUtil {
             logger.info("resultPrint={}",resulPrint);
             return result;
         } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException | IllegalArgumentException e) {
-            throw e;
+            throw new IllegalArgumentException("source invoke error:\n" + e.getMessage(),e);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             return null;
         } finally {
             System.setOut(out);
         }
+    }
+
+
+    public static void testMethod(){
+        System.out.println("hello world");
     }
 
 //    /**

@@ -19,19 +19,24 @@ public enum  ResponseStatusEnum {
     UNKNOWN_ERROR(2001, "unknown error"),
 
     /**
-     * 编译成功
+     * 失败
      */
-    COMPILE_SUCCESS(2002, "compile success"),
+    FAIL(2002, "fail");
 
-    /**
-     * 编译失败，源文件无法编译
-     */
-    COMPILE_ERROR(2003, "compile error"),
-
-    /**
-     * 方法执行失败，invoke异常
-     */
-    INVOKE_ERROR(2004, "invoke error");
+//    /**
+//     * 编译成功
+//     */
+//    COMPILE_SUCCESS(2002, "compile success"),
+//
+//    /**
+//     * 编译失败，源文件无法编译
+//     */
+//    COMPILE_ERROR(2003, "compile error"),
+//
+//    /**
+//     * 方法执行失败，invoke异常
+//     */
+//    INVOKE_ERROR(2004, "invoke error");
 
 
 

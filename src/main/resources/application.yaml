@@ -54,6 +54,9 @@
 #  publisher-confirms: true
   logging:
     config: classpath:log4j.xml
+
+  jackson:
+    serialization: FAIL_ON_EMPTY_BEANS:false
 #level:
 #      root: debug
 ##      com.bestvike: debug

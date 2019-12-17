@@ -1,6 +1,6 @@
 package top.catoy.compile.Service;
 
-import top.catoy.compile.entity.CompilationResult;
+import top.catoy.compile.entity.TaskResult;
 import top.catoy.compile.entity.CompilationTask;
 import top.catoy.compile.entity.CompileResponse;
 
@@ -17,17 +17,17 @@ import java.lang.reflect.InvocationTargetException;
 public interface CompilationService {
 
     /**
-     * 编译
+     * 编译执行
      * @param compilationTask
      * @return
      */
-     CompileResponse compile(CompilationTask compilationTask);
+     CompileResponse execute(CompilationTask compilationTask);
 
-    /**
-     * 执行类文件
-     * @param compilationTask
-     * @return
-     */
-     CompilationResult execute(CompilationTask compilationTask) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, UnsupportedEncodingException;
+//    /**
+//     * 执行类文件
+//     * @param compilationTask
+//     * @return
+//     */
+//     TaskResult execute(CompilationTask compilationTask) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, UnsupportedEncodingException;
 
 }

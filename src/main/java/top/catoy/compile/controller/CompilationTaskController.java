@@ -44,16 +44,23 @@ public class CompilationTaskController {
         compilationTask2.setArgs(objects);
 
         StringBuffer stringBuffer = new StringBuffer("package com.catoy.topp;\n" +
-                "import org.apache.log4j.Logger;\n" +
+                "import java.util.HashMap;\n" +
+                "import java.util.Map;\n" +
+                "import top.catoy.compile.util.ClassUtil;\n" +
                 "public class Hello{\n" +
                 " /**\n" +
                 " * 主入口\n" +
                 " **/\n" +
-                "  public Result calculate(String data,String data2){\n" +
-                "    System.out.println(\"123\");\n" +
-//                "    Result r = new Result();\n" +
-//                "    r.result = data.url + data.name;\n" +
-                "    return null;\n" +
+                "  public Result calculate(String data){\n" +
+                "    Result result = new Result();\n" +
+                "    result.data1 = \"hello\";\n" +
+                "    result.data2 = \"world\";\n" +
+                "    Map<String,String> map = new HashMap();\n" +
+                "    ClassUtl.testMethod();\n" +
+                "    map.put(\"1\",\"hello\");\n" +
+                "    map.put(\"2\",\"world\");\n" +
+                "    result.data3 = map;\n" +
+                "    return result;\n" +
                 "  }\n" +
                 "  \n" +
                 "  /**\n" +
@@ -68,9 +75,11 @@ public class CompilationTaskController {
                 "  * 输出格式\n" +
                 "  **/\n" +
                 "  class Result{\n" +
-                "    String result;\n" +
+                "   public String data1;\n" +
+                "   public String data2;\n" +
+                "   public Map data3;\n" +
                 "  }\n" +
-                "}");
+                "}\n");
         compilationTask.setSource(stringBuffer);
         compilationTask2.setSource(stringBuffer);
         ArrayList<CompilationTask> compilationTasks = new ArrayList<>();
@@ -87,7 +96,7 @@ public class CompilationTaskController {
     @PostMapping("/compile")
     public CompileResponse compile (@RequestBody @Validated CompilationTask compilationTask) {
         logger.info("compilationTask={}",compilationTask);
-        return compilationService.compile(compilationTask);
+        return compilationService.execute(compilationTask);
     }
 
 

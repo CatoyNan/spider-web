@@ -1,20 +1,20 @@
 package top.catoy.compile.entity;
 
 /**
- * @ClassName CompilationResult
+ * @ClassName TaskResult
  * @Description TODO
  * @Author admin
  * @Date 2019-12-12 18:16
  * @Version 1.0
  **/
-public class CompilationResult {
+public class TaskResult {
     private Object resultData;// 方法执行返回的对象
     private StringBuffer resultPrint; // 执行时的输出
     private Boolean isCompileSuccess; // 编译是否成功
     private Boolean isInvokeSuccess; // 反射执行方法是否成功
     private StringBuffer errorMsg; //编译和执行时的错误
 
-    public CompilationResult(Object resultData, StringBuffer resultPrint, Boolean isCompileSuccess, Boolean isInvokeSuccess, StringBuffer errorMsg) {
+    public TaskResult(Object resultData, StringBuffer resultPrint, Boolean isCompileSuccess, Boolean isInvokeSuccess, StringBuffer errorMsg) {
         this.resultData = resultData;
         this.resultPrint = resultPrint;
         this.isCompileSuccess = isCompileSuccess;
@@ -64,7 +64,7 @@ public class CompilationResult {
 
     @Override
     public String toString() {
-        return "CompilationResult{" +
+        return "TaskResult{" +
                 "resultData=" + resultData +
                 ", resultPrint=" + resultPrint +
                 '}';
