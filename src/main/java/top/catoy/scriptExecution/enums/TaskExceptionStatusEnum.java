@@ -1,13 +1,13 @@
-package top.catoy.compile.enums;
+package top.catoy.scriptExecution.enums;
 
 /**
- * @ClassName CompileExceptionStatusEnum
+ * @ClassName TaskExceptionStatusEnum
  * @Description TODO
  * @Author admin
  * @Date 2019-11-27 13:01
  * @Version 1.0
  **/
-public enum CompileExceptionStatusEnum {
+public enum TaskExceptionStatusEnum {
     /**
      * 文件路径无效
      */
@@ -26,7 +26,7 @@ public enum CompileExceptionStatusEnum {
     /**
      * 编译出错
      */
-    SOURCE_COMPILE_ERROR(1004, "source compile error"),
+    SOURCE_COMPILE_ERROR(1004, "source scriptExecution error"),
 
     /**
      * 反射方法参数出错
@@ -48,7 +48,7 @@ public enum CompileExceptionStatusEnum {
 
     private String message;
 
-    CompileExceptionStatusEnum(int code, String message) {
+    TaskExceptionStatusEnum(int code, String message) {
         this.code = code;
         this.message = message;
     }

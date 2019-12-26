@@ -1,18 +1,18 @@
-package top.catoy.compile.entity;
+package top.catoy.entity;
 
 /**
- * @ClassName CompileResponse
+ * @ClassName Response
  * @Description TODO
  * @Author admin
  * @Date 2019-11-28 18:31
  * @Version 1.0
  **/
-public class CompileResponse {
+public class Response {
     private Integer status;
     private String msg;
     private Object data;
 
-    public CompileResponse(Integer status, String msg, Object data) {
+    public Response(Integer status, String msg, Object data) {
         this.status = status;
         this.msg = msg;
         this.data = data;

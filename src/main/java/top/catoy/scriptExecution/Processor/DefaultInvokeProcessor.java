@@ -1,9 +1,9 @@
-package top.catoy.compile.compileProcessor;
+package top.catoy.scriptExecution.Processor;
 
 import org.springframework.stereotype.Component;
-import top.catoy.compile.entity.TaskResult;
-import top.catoy.compile.entity.CompilationTask;
-import top.catoy.compile.util.ClassUtil;
+import top.catoy.scriptExecution.entity.TaskResult;
+import top.catoy.scriptExecution.entity.Task;
+import top.catoy.scriptExecution.util.ClassUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -18,7 +18,7 @@ import java.lang.reflect.Method;
 @Component
 public class DefaultInvokeProcessor implements InvokeProsser{
     @Override
-    public TaskResult run(CompilationTask compilationTask) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException {
+    public TaskResult run(Task compilationTask) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException {
         //执行测试方法
         String methodName = compilationTask.getMethodName();
         Method[] ms = compilationTask.getClz().getMethods();

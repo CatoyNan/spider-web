@@ -1,4 +1,4 @@
-package top.catoy.compile.entity;
+package top.catoy.scriptExecution.entity;
 
 /**
  * @ClassName TaskResult

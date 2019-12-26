@@ -1,14 +1,14 @@
-package top.catoy.compile.controller;
+package top.catoy.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import top.catoy.compile.Service.CompilationService;
-import top.catoy.compile.entity.CompilationTask;
-import top.catoy.compile.entity.CompileResponse;
-import top.catoy.compile.enums.ResponseStatusEnum;
+import top.catoy.scriptExecution.entity.Task;
+import top.catoy.scriptExecution.enums.TaskResultStatusEnum;
+import top.catoy.entity.Response;
+import top.catoy.service.CompilationService;
 
 import java.util.ArrayList;
 
@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * @Version 1.0
  **/
 @RestController
-@RequestMapping("/compilationtask")
+@RequestMapping("/task")
 public class CompilationTaskController {
     private static final Logger logger = LoggerFactory.getLogger(CompilationTaskController.class);
     @Autowired
@@ -30,10 +30,10 @@ public class CompilationTaskController {
      * @return
      */
     @GetMapping("/getAllCompilationTasksByUserId")
-    public CompileResponse hello() {
+    public Response hello() {
         System.out.println("134");
-        CompilationTask compilationTask = new CompilationTask();
-        CompilationTask compilationTask2 = new CompilationTask();
+        Task compilationTask = new Task();
+        Task compilationTask2 = new Task();
 
         compilationTask.setMethodName("calculate");
         compilationTask2.setMethodName("calculate");
@@ -46,7 +46,7 @@ public class CompilationTaskController {
         StringBuffer stringBuffer = new StringBuffer("package com.catoy.topp;\n" +
                 "import java.util.HashMap;\n" +
                 "import java.util.Map;\n" +
-                "import top.catoy.compile.util.ClassUtil;\n" +
+                "import top.catoy.scriptExecution.util.ClassUtil;\n" +
                 "public class Hello{\n" +
                 " /**\n" +
                 " * 主入口\n" +
@@ -82,7 +82,7 @@ public class CompilationTaskController {
                 "}\n");
         compilationTask.setSource(stringBuffer);
         compilationTask2.setSource(stringBuffer);
-        ArrayList<CompilationTask> compilationTasks = new ArrayList<>();
+        ArrayList<Task> compilationTasks = new ArrayList<>();
         compilationTask.setId(1001);
         compilationTask2.setId(2001);
         compilationTasks.add(compilationTask);
@@ -90,11 +90,11 @@ public class CompilationTaskController {
 
         compilationTask.setClassName("Hello.java");
         compilationTask2.setClassName("Hello.java");
-        return new CompileResponse(ResponseStatusEnum.SUCCESS.getCode(),ResponseStatusEnum.SUCCESS.getMessage(),compilationTasks);
+        return new Response(TaskResultStatusEnum.SUCCESS.getCode(), TaskResultStatusEnum.SUCCESS.getMessage(),compilationTasks);
     }
 
-    @PostMapping("/compile")
-    public CompileResponse compile (@RequestBody @Validated CompilationTask compilationTask) {
+    @PostMapping("/execute")
+    public Response execute (@RequestBody @Validated Task compilationTask) {
         logger.info("compilationTask={}",compilationTask);
         return compilationService.execute(compilationTask);
     }

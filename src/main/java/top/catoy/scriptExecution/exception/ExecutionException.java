@@ -1,23 +1,23 @@
-package top.catoy.exception;
+package top.catoy.scriptExecution.exception;
 
-import top.catoy.compile.enums.CompileExceptionStatusEnum;
+import top.catoy.scriptExecution.enums.TaskExceptionStatusEnum;
 
-public class CompileException extends RuntimeException {
+public class ExecutionException extends RuntimeException {
     private int code;
     private String message;
 
-    public CompileException(int code, String message) {
+    public ExecutionException(int code, String message) {
         super(message);
         this.code = code;
         this.message = message;
     }
 
-    public CompileException(CompileExceptionStatusEnum resultStatusEnum) {
+    public ExecutionException(TaskExceptionStatusEnum resultStatusEnum) {
         this.code = resultStatusEnum.getCode();
         this.message = resultStatusEnum.getMessage();
     }
 
-    public CompileException(String message, Throwable cause, int code) {
+    public ExecutionException(String message, Throwable cause, int code) {
         super(message,cause);
         this.code = code;
         this.message = message;

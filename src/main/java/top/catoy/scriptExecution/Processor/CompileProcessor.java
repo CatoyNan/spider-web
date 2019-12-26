@@ -1,6 +1,6 @@
-package top.catoy.compile.compileProcessor;
+package top.catoy.scriptExecution.Processor;
 
-import top.catoy.compile.entity.CompilationTask;
+import top.catoy.scriptExecution.entity.Task;
 
 import java.util.ArrayList;
 
@@ -27,7 +27,7 @@ public interface CompileProcessor {
      * 设置编译任务
      * @param compilationTask
      */
-    void setCompilationTask(CompilationTask compilationTask);
+    void setCompilationTask(Task compilationTask);
 
     /**
      * 设置类所要用到的参数

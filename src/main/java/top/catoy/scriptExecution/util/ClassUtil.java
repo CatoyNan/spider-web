@@ -1,11 +1,10 @@
-package top.catoy.compile.util;
+package top.catoy.scriptExecution.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import top.catoy.compile.classLoader.DiskClassLoader;
-import top.catoy.compile.entity.CompilationTask;
-import top.catoy.exception.CompileException;
-import top.catoy.compile.enums.CompileExceptionStatusEnum;
+import top.catoy.scriptExecution.classLoader.DiskClassLoader;
+import top.catoy.scriptExecution.enums.TaskExceptionStatusEnum;
+import top.catoy.scriptExecution.exception.ExecutionException;
 
 import javax.tools.*;
 import java.io.*;
@@ -54,10 +53,10 @@ public class ClassUtil {
                     //可以在此处自定义编译诊(错误)断信息的输出格式
                     stringBuffer.append(diagnostic.toString()).append("\n");
                 }
-                throw new CompileException(CompileExceptionStatusEnum.SOURCE_COMPILE_ERROR.getCode(), CompileExceptionStatusEnum.SOURCE_COMPILE_ERROR.getMessage() + "\n" + stringBuffer);
+                throw new ExecutionException(TaskExceptionStatusEnum.SOURCE_COMPILE_ERROR.getCode(), TaskExceptionStatusEnum.SOURCE_COMPILE_ERROR.getMessage() + "\n" + stringBuffer);
             }
 
-        } catch (CompileException e) {
+        } catch (ExecutionException e) {
             throw e;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -111,7 +110,7 @@ public class ClassUtil {
      * @param loadPath 加载路径
      * @return
      */
-    private static Class<?> load(String name, String loadPath) throws CompileException {
+    private static Class<?> load(String name, String loadPath) throws ExecutionException {
         Class<?> cls = null;
         ClassLoader classLoader;
         try {
@@ -123,7 +122,7 @@ public class ClassUtil {
             logger.debug("Load Class[" + name + "] by " + classLoader);
         } catch (ClassNotFoundException e) {
             logger.error("loadPath:" + loadPath);
-            throw new CompileException(CompileExceptionStatusEnum.CLASS_CAN_NOT_LOAD.getMessage(), e, CompileExceptionStatusEnum.CLASS_CAN_NOT_LOAD.getCode());
+            throw new ExecutionException(TaskExceptionStatusEnum.CLASS_CAN_NOT_LOAD.getMessage(), e, TaskExceptionStatusEnum.CLASS_CAN_NOT_LOAD.getCode());
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
@@ -139,7 +138,7 @@ public class ClassUtil {
      * @param ops      编译参数
      * @return
      */
-    public static Class<?> loadClass(String filePath, String source, String clsName, List<String> ops) throws CompileException {
+    public static Class<?> loadClass(String filePath, String source, String clsName, List<String> ops) throws ExecutionException {
         try {
             String var1 = clsName.substring(0, clsName.lastIndexOf("."));
             String packageName = var1.substring(0, var1.substring(0, clsName.lastIndexOf(".")).lastIndexOf("."));
@@ -147,7 +146,7 @@ public class ClassUtil {
             writeJavaFile(filePath + "/" + packageName.replace(".", "/") + "/" + fileName, source);
             javac(ops, filePath + "/" + packageName.replace(".", "/") + "/" + fileName);
             return load(clsName, filePath + "/" + packageName.replace(".", "/") + "/");
-        } catch (CompileException e) {
+        } catch (ExecutionException e) {
             throw e;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -179,7 +178,9 @@ public class ClassUtil {
             resulPrint.append(new String(outputStream.toByteArray(), StandardCharsets.UTF_8));
             logger.info("resultPrint={}",resulPrint);
             return result;
-        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException | IllegalArgumentException e) {
+        } catch (InvocationTargetException e) {
+            throw new ExecutionException("source execute error:\n" + e.getCause() + "\n" + e.getCause().getStackTrace()[0],e,TaskExceptionStatusEnum.INVOKE_Target_Exception.getCode());
+        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | IllegalArgumentException e) {
             throw new IllegalArgumentException("source invoke error:\n" + e.getMessage(),e);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);

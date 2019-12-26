@@ -1,13 +1,13 @@
-package top.catoy.compile.enums;
+package top.catoy.scriptExecution.enums;
 
 /**
- * @ClassName ResponseStatusEnum
+ * @ClassName TaskResultStatusEnum
  * @Description TODO
  * @Author admin
  * @Date 2019-11-29 13:56
  * @Version 1.0
  **/
-public enum  ResponseStatusEnum {
+public enum TaskResultStatusEnum {
     /**
      * 成功
      */
@@ -26,12 +26,12 @@ public enum  ResponseStatusEnum {
 //    /**
 //     * 编译成功
 //     */
-//    COMPILE_SUCCESS(2002, "compile success"),
+//    COMPILE_SUCCESS(2002, "scriptExecution success"),
 //
 //    /**
 //     * 编译失败，源文件无法编译
 //     */
-//    COMPILE_ERROR(2003, "compile error"),
+//    COMPILE_ERROR(2003, "scriptExecution error"),
 //
 //    /**
 //     * 方法执行失败，invoke异常
@@ -44,7 +44,7 @@ public enum  ResponseStatusEnum {
 
     private String message;
 
-    ResponseStatusEnum(int code, String message) {
+    TaskResultStatusEnum(int code, String message) {
         this.code = code;
         this.message = message;
     }

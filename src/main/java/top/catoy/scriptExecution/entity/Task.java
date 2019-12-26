@@ -1,6 +1,5 @@
-package top.catoy.compile.entity;
+package top.catoy.scriptExecution.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +15,7 @@ import java.util.ArrayList;
  * @Version 1.0
  **/
 @Component
-public class CompilationTask {
+public class Task {
     private Integer id;
     //类名
     @Pattern(regexp = ".*\\.java",message = "ClassName should be end with '.java'")
@@ -101,7 +100,7 @@ public class CompilationTask {
 
     @Override
     public String toString() {
-        return "CompilationTask{" +
+        return "Task{" +
                 "id=" + id +
                 ", className='" + className + '\'' +
                 ", rootPath='" + rootPath + '\'' +

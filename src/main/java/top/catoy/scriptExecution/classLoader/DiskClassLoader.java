@@ -1,4 +1,4 @@
-package top.catoy.compile.classLoader;
+package top.catoy.scriptExecution.classLoader;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
