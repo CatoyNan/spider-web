@@ -25,9 +25,9 @@ public class RpcClient {
     DirectExchange exchange;
 
 
-    @Test
-    public void test() {
-        rabbitTemplate.convertSendAndReceive(exchange.getName(),);
-    }
+//    @Test
+//    public void test() {
+//        rabbitTemplate.convertSendAndReceive(exchange.getName(),);
+//    }
 
 }
