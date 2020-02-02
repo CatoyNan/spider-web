@@ -47,20 +47,18 @@ public class CompilationTaskController {
                 "import java.util.HashMap;\n" +
                 "import java.util.Map;\n" +
                 "import top.catoy.scriptExecution.util.ClassUtil;\n" +
+                "import top.catoy.spider.DefaultBroswer;\n" +
                 "public class Hello{\n" +
                 " /**\n" +
                 " * 主入口\n" +
                 " **/\n" +
                 "  public Result calculate(String data){\n" +
-                "    Result result = new Result();\n" +
-                "    result.data1 = \"hello\";\n" +
-                "    result.data2 = \"world\";\n" +
-                "    Map<String,String> map = new HashMap();\n" +
-                "    ClassUtl.testMethod();\n" +
-                "    map.put(\"1\",\"hello\");\n" +
-                "    map.put(\"2\",\"world\");\n" +
-                "    result.data3 = map;\n" +
-                "    return result;\n" +
+                "    DefaultBroswer.init()\n" +
+                "                  .setUrl(\"https://www.baidu.com\")\n" +
+                "                  .get()\n" +
+                "                  .setCookie(\"BDUSS=FaVHUwTVJ1bFZaaFhVUWNuOGpWOUpGU2cwdlJuZEtVVmZnS2tOcWttalNGMTFlRUFBQUFBJCQAAAAAAAAAAAEAAADcE4ZA0KHJrdHPMwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANKKNV7SijVeSm\",\".baidu.com\",\"/\").get();\n" +
+                "\n" +
+                "    return null;\n" +
                 "  }\n" +
                 "  \n" +
                 "  /**\n" +
@@ -79,7 +77,9 @@ public class CompilationTaskController {
                 "   public String data2;\n" +
                 "   public Map data3;\n" +
                 "  }\n" +
-                "}\n");
+                "}\n" +
+                "\n" +
+                "\n");
         compilationTask.setSource(stringBuffer);
         compilationTask2.setSource(stringBuffer);
         ArrayList<Task> compilationTasks = new ArrayList<>();
