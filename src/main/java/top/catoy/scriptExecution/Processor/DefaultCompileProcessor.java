@@ -45,10 +45,10 @@ public class DefaultCompileProcessor implements CompileProcessor {
         this.task = compilationTask;
     }
 
-    @Override
-    public void setArgs(ArrayList<Object> args) {
-        task.setArgs(args);
-    }
+//    @Override
+//    public void setArgs(ArrayList<Object> args) {
+//        task.setArgs(args);
+//    }
 
     @Override
     public Class<?> loadClass(String filePath, StringBuffer source, String className, ArrayList<String> ops) throws ExecutionException {

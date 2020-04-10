@@ -29,11 +29,11 @@ public interface CompileProcessor {
      */
     void setCompilationTask(Task compilationTask);
 
-    /**
-     * 设置类所要用到的参数
-     * @param args
-     */
-    void setArgs(ArrayList<Object> args);
+//    /**
+//     * 设置类所要用到的参数
+//     * @param args
+//     */
+//    void setArgs(ArrayList<Object> args);
 
 
     /**

@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +46,8 @@ public class DefaultBroswer implements Broswer{
         logger.info("start init broswer");
         Broswer defaultBroswer = new DefaultBroswer();
         FirefoxOptions firefoxOptions = new FirefoxOptions();
-        WebDriver webDriver = new FirefoxDriver(firefoxOptions);
+        firefoxOptions.setCapability("browserName","htmlunit");
+        WebDriver webDriver = new HtmlUnitDriver(firefoxOptions);
         webDriver.manage().window().maximize();
         defaultBroswer.setWebDriver(webDriver);
         logger.info("init broswer success");
@@ -120,6 +122,11 @@ public class DefaultBroswer implements Broswer{
     @Override
     public void setWebDriver(WebDriver webDriver) {
         this.webDriver = webDriver;
+    }
+
+    @Override
+    public WebDriver getWebDriver() {
+        return this.webDriver;
     }
 
     public static void main(String[] args) {

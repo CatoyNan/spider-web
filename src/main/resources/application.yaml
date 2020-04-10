@@ -53,8 +53,8 @@
         max-backupPath: /Users/admin/work/test/backup/
         keys: fourzeroeight
 
-  logging:
-    config: classpath:log4j.xml
+#  logging:
+#    config: classpath:log4j.xml
 
   jackson:
     serialization: FAIL_ON_EMPTY_BEANS:false

@@ -67,4 +67,9 @@ public interface Broswer {
      */
     void setWebDriver(WebDriver webDriver);
 
+    /**
+     * 获取webDriver
+     */
+    WebDriver getWebDriver();
+
 }
