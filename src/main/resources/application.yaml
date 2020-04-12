@@ -1,6 +1,5 @@
   server:
     port: 8080
-    #  context-path: /demo
     tomcat:
       basedir: logistics/tomcat
   spring:
@@ -9,10 +8,15 @@
     rabbitmq:
       host: 127.0.0.1
       port: 5672
-      username: guest
-      password: guest
-      virtual-host: /
+      username: catoy
+      password: 123
+      virtual-host: /test
       publisher-confirms: true
+    datasource:
+      url: jdbc:mysql://catoy.top/spider?characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+      username: root
+      password: password
+      driver-class-name: com.mysql.jdbc.Driver
 #    datasource:
 #      url: jdbc:mysql://localhost:3306/electronicpostcard
 #      username: root
@@ -36,11 +40,12 @@
 #        classpath:/static/,classpath:/public/,file:/home/admin/card/
   #    static-locations: classpath:/META-INF/resources/,classpath:/resources/,
   #                           classpath:/static/,classpath:/public/,file:D:/tts/
+
   mybatis:
     mapper-locations: classpath:mapper/*.xml
     configuration:
       log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-    type-aliases-package: com.example.demo.Bean
+#    type-aliases-package: top.catoy
 
   com:
     sxito:

@@ -1,17 +1,17 @@
 package top.catoy.spider;
 
-import jdk.nashorn.internal.runtime.regexp.joni.Regex;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxBinary;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,6 +26,10 @@ import java.util.regex.Pattern;
 public class DefaultBroswer implements Broswer{
     private static Logger logger = LoggerFactory.getLogger(DefaultBroswer.class);
 
+//    //驱动路径
+//    private static String DRIVERPATH = "/Users/admin/Desktop/chromedriver 2";
+//
+//    static {System.setProperty("webdriver.chrome.driver",DRIVERPATH);}
     //驱动路径
     private static String DRIVERPATH = "/Users/admin/Desktop/geckodriver";
 
@@ -38,18 +42,28 @@ public class DefaultBroswer implements Broswer{
     //驱动
     private WebDriver webDriver = null;
 
+    //WebDriverWait
+    private WebDriverWait webDriverWait = null;
+
     //网址URL
     private String url = null;
 
     public static Broswer init() {
-//        WebDriverWait wait = new WebDriverWait(webDriver, 45);
+//        logger.info("start init broswer");
+//        Broswer defaultBroswer = new DefaultBroswer();
+//        ChromeOptions chromeOptions = new ChromeOptions();
+//        WebDriver webDriver = new ChromeDriver(chromeOptions);
+//        webDriver.manage().window().maximize();
+//        defaultBroswer.setWebDriver(webDriver);
+//        logger.info("init broswer success");
         logger.info("start init broswer");
         Broswer defaultBroswer = new DefaultBroswer();
         FirefoxOptions firefoxOptions = new FirefoxOptions();
-        firefoxOptions.setCapability("browserName","htmlunit");
-        WebDriver webDriver = new HtmlUnitDriver(firefoxOptions);
+        WebDriver webDriver = new FirefoxDriver(firefoxOptions);
         webDriver.manage().window().maximize();
         defaultBroswer.setWebDriver(webDriver);
+        WebDriverWait webDriverWait = new WebDriverWait(webDriver, 20);
+        defaultBroswer.setWebDriverWait(webDriverWait);
         logger.info("init broswer success");
         return defaultBroswer;
     }
@@ -129,7 +143,30 @@ public class DefaultBroswer implements Broswer{
         return this.webDriver;
     }
 
+    @Override
+    public List<WebElement> cssSelector(String cssSelector) {
+        return this.getWebDriver().findElements(By.cssSelector(cssSelector));
+    }
+
+    @Override
+    public WebElement cssSelectorOne(String cssSelector) {
+        return this.getWebDriver().findElement(By.cssSelector(cssSelector));
+    }
+
+    @Override
+    public void setWebDriverWait(WebDriverWait webDriverWait) {
+        this.webDriverWait = webDriverWait;
+    }
+
+    @Override
+    public WebDriverWait getWebDriverWait() {
+        return this.webDriverWait;
+    }
+
     public static void main(String[] args) {
-        Broswer defaultBroswer = DefaultBroswer.init().setUrl("https://www.baidu.com").get().setCookie("BDUSS=FaVHUwTVJ1bFZaaFhVUWNuOGpWOUpGU2cwdlJuZEtVVmZnS2tOcWttalNGMTFlRUFBQUFBJCQAAAAAAAAAAAEAAADcE4ZA0KHJrdHPMwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANKKNV7SijVeSm",".baidu.com","/").get();
+        Broswer defaultBroswer = DefaultBroswer.init().setUrl("https://www.baidu.com").get();
+        defaultBroswer.getWebDriverWait().until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div#lg")));
+        WebElement element = defaultBroswer.cssSelectorOne("div#lg");
+        logger.error(element.getTagName());
     }
 }

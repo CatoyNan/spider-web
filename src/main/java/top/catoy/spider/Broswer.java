@@ -1,7 +1,12 @@
 package top.catoy.spider;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.List;
 
 /**
  * 浏览器抽象接口
@@ -71,5 +76,28 @@ public interface Broswer {
      * 获取webDriver
      */
     WebDriver getWebDriver();
+
+    /**
+     * css 元素选择器
+     * @return
+     */
+    List<WebElement> cssSelector(String cssSelector);
+
+    /**
+     * css 元素选择器 只返回一个
+     * @return
+     */
+    WebElement cssSelectorOne(String cssSelector);
+
+    /**
+     * 设置webDriverWait
+     * @param webDriverWait
+     */
+    void setWebDriverWait(WebDriverWait webDriverWait);
+
+    /**
+     * 获取webDriverWait
+     */
+    WebDriverWait getWebDriverWait();
 
 }

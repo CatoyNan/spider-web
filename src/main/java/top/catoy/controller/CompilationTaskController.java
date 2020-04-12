@@ -31,7 +31,6 @@ public class CompilationTaskController {
      */
     @GetMapping("/getAllCompilationTasksByUserId")
     public Response hello() {
-        System.out.println("134");
         Task compilationTask = new Task();
         Task compilationTask2 = new Task();
 
