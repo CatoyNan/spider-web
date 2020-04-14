@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @ClassName CompilationTask
@@ -34,7 +35,7 @@ public class Task {
     private Class<?> clz;
 
     //方法参数
-    private ArrayList<Object> args;
+    private List<Object> args;
 
     //入口方法
     @NotEmpty(message = "MethodName can not be empty")
@@ -90,11 +91,11 @@ public class Task {
         this.source = source;
     }
 
-    public ArrayList<Object> getArgs() {
+    public List<Object> getArgs() {
         return args;
     }
 
-    public void setArgs(ArrayList<Object> args) {
+    public void setArgs(List<Object> args) {
         this.args = args;
     }
 

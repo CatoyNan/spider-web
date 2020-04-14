@@ -1,16 +1,21 @@
 package top.catoy.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import top.catoy.entity.Script;
 import top.catoy.scriptExecution.entity.Task;
 import top.catoy.scriptExecution.enums.TaskResultStatusEnum;
 import top.catoy.entity.Response;
 import top.catoy.service.CompilationService;
+import top.catoy.service.ScriptService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @ClassName CompilationTaskController
@@ -25,70 +30,40 @@ public class CompilationTaskController {
     private static final Logger logger = LoggerFactory.getLogger(CompilationTaskController.class);
     @Autowired
     CompilationService compilationService;
+
+    @Autowired
+    ScriptService scriptService;
+
+    @PostMapping("/push")
+    public Response push(@RequestBody @Validated Task compilationTask) {
+        Script script = new Script();
+        String className = compilationTask.getClassName();
+        className = className.replace(".java","");
+        script.setMethodName(compilationTask.getMethodName());
+        script.setMethodArgs(StringUtils.join(compilationTask.getArgs(),","));
+        script.setScriptContent(compilationTask.getSource().toString());
+        script.setScriptName(className.replace(".java","").substring(className.lastIndexOf(".") + 1));
+        scriptService.addScript(script);
+        return new Response(TaskResultStatusEnum.SUCCESS.getCode(), TaskResultStatusEnum.SUCCESS.getMessage(),null);
+    }
     /**
      * 获取客户的所有脚本
      * @return
      */
     @GetMapping("/getAllCompilationTasksByUserId")
-    public Response hello() {
-        Task compilationTask = new Task();
-        Task compilationTask2 = new Task();
-
-        compilationTask.setMethodName("calculate");
-        compilationTask2.setMethodName("calculate");
-
-        ArrayList<Object> objects = new ArrayList<>();
-        objects.add("hello");
-        compilationTask.setArgs(objects);
-        compilationTask2.setArgs(objects);
-
-        StringBuffer stringBuffer = new StringBuffer("package com.catoy.topp;\n" +
-                "import java.util.HashMap;\n" +
-                "import java.util.Map;\n" +
-                "import top.catoy.scriptExecution.util.ClassUtil;\n" +
-                "import top.catoy.spider.DefaultBroswer;\n" +
-                "public class Hello{\n" +
-                " /**\n" +
-                " * 主入口\n" +
-                " **/\n" +
-                "  public Result calculate(String data){\n" +
-                "    DefaultBroswer.init()\n" +
-                "                  .setUrl(\"https://www.baidu.com\")\n" +
-                "                  .get()\n" +
-                "                  .setCookie(\"BDUSS=FaVHUwTVJ1bFZaaFhVUWNuOGpWOUpGU2cwdlJuZEtVVmZnS2tOcWttalNGMTFlRUFBQUFBJCQAAAAAAAAAAAEAAADcE4ZA0KHJrdHPMwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANKKNV7SijVeSm\",\".baidu.com\",\"/\").get();\n" +
-                "\n" +
-                "    return null;\n" +
-                "  }\n" +
-                "  \n" +
-                "  /**\n" +
-                "  * 数据\n" +
-                "  **/\n" +
-                "  class Data{\n" +
-                "    String url;\n" +
-                "    String name;\n" +
-                "  }\n" +
-                "  \n" +
-                "  /**\n" +
-                "  * 输出格式\n" +
-                "  **/\n" +
-                "  class Result{\n" +
-                "   public String data1;\n" +
-                "   public String data2;\n" +
-                "   public Map data3;\n" +
-                "  }\n" +
-                "}\n" +
-                "\n" +
-                "\n");
-        compilationTask.setSource(stringBuffer);
-        compilationTask2.setSource(stringBuffer);
+    public Response getAllCompilationTasksByUserId(@RequestParam String id) {
+        List<Script> scriptList = scriptService.getScriptByUserId(Integer.valueOf(id));
         ArrayList<Task> compilationTasks = new ArrayList<>();
-        compilationTask.setId(1001);
-        compilationTask2.setId(2001);
-        compilationTasks.add(compilationTask);
-        compilationTasks.add(compilationTask2);
-
-        compilationTask.setClassName("Hello.java");
-        compilationTask2.setClassName("Hello.java");
+        for (Script s:scriptList) {
+            Task compilationTask = new Task();
+            ArrayList<Object> objects = new ArrayList<>();
+            compilationTask.setSource(new StringBuffer(s.getScriptContent()));
+            compilationTask.setMethodName(s.getMethodName());
+            compilationTask.setClassName(s.getScriptName());
+            compilationTask.setArgs(Arrays.asList((Object) s.getMethodArgs().split(",")));
+            compilationTask.setId(s.getId());
+            compilationTasks.add(compilationTask);
+        }
         return new Response(TaskResultStatusEnum.SUCCESS.getCode(), TaskResultStatusEnum.SUCCESS.getMessage(),compilationTasks);
     }
 

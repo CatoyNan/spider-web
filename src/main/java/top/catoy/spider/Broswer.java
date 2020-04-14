@@ -1,6 +1,5 @@
 package top.catoy.spider;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -84,10 +83,26 @@ public interface Broswer {
     List<WebElement> cssSelector(String cssSelector);
 
     /**
+     * css 元素选择器,在webElement中查找
+     * @param cssSelector
+     * @param webElement
+     * @return
+     */
+    List<WebElement> cssSelector(String cssSelector, WebElement webElement);
+
+    /**
      * css 元素选择器 只返回一个
      * @return
      */
     WebElement cssSelectorOne(String cssSelector);
+
+    /**
+     * css 元素选择器，在webElement中查找，只返回一个
+     * @param cssSelector
+     * @param webElement
+     * @return
+     */
+    WebElement cssSelectorOne(String cssSelector, WebElement webElement);
 
     /**
      * 设置webDriverWait
@@ -99,5 +114,19 @@ public interface Broswer {
      * 获取webDriverWait
      */
     WebDriverWait getWebDriverWait();
+
+    /**
+     * 是否存在某个元素
+     */
+    boolean isExist(String cssSelector);
+
+    /**
+     * webElement中是否存在某个元素
+     * @param cssSelector
+     * @param webElement
+     * @return
+     */
+    boolean isExist(String cssSelector, WebElement webElement);
+
 
 }

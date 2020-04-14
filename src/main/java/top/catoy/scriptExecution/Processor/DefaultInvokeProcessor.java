@@ -1,5 +1,8 @@
 package top.catoy.scriptExecution.Processor;
 
+import com.alibaba.fastjson.JSON;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import top.catoy.scriptExecution.entity.TaskResult;
 import top.catoy.scriptExecution.entity.Task;
@@ -17,6 +20,7 @@ import java.lang.reflect.Method;
  **/
 @Component
 public class DefaultInvokeProcessor implements InvokeProsser{
+    private static final Logger logger = LoggerFactory.getLogger(DefaultInvokeProcessor.class);
     @Override
     public TaskResult run(Task compilationTask) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException {
         //执行测试方法
@@ -41,7 +45,8 @@ public class DefaultInvokeProcessor implements InvokeProsser{
             }
         }
         Object resultData = ClassUtil.invoke(compilationTask.getClz(), methodName, paramTypes, params, resulPrint);
-//        String jsonResultData = JSON.toJSONString(resultData);
+        String resultJsonData = JSON.toJSONString(resultData);
+        logger.info("resultJsonData:" + resultJsonData);
         return new TaskResult(resultData, resulPrint, true, true, null);
     }
 }
