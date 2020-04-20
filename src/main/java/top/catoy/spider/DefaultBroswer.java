@@ -4,8 +4,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
@@ -29,6 +32,7 @@ public class DefaultBroswer implements Broswer{
     //驱动路径
     private static String DRIVERPATH = "/Users/admin/Desktop/geckodriver";
 
+//    private static String DRIVERPATH = "/Users/admin/Desktop/chromedriver 2";
     static {System.setProperty("webdriver.gecko.driver",DRIVERPATH);}
 
     //驱动
@@ -43,11 +47,17 @@ public class DefaultBroswer implements Broswer{
     public static Broswer init() {
         logger.info("start init broswer");
         Broswer defaultBroswer = new DefaultBroswer();
-        FirefoxOptions firefoxOptions = new FirefoxOptions();
-        WebDriver webDriver = new FirefoxDriver(firefoxOptions);
+//        FirefoxOptions firefoxOptions = new FirefoxOptions();
+//        ChromeOptions chromeOptions = new ChromeOptions();
+//        DesiredCapabilities caps = DesiredCapabilities.chrome();
+//        caps.setCapability("pageLoadStrategy", "none");
+        DesiredCapabilities caps = DesiredCapabilities.firefox();
+        caps.setCapability("pageLoadStrategy","eager");
+        WebDriver webDriver = new FirefoxDriver(caps);
+//        WebDriver webDriver = new ChromeDriver(caps);
         webDriver.manage().window().maximize();
         defaultBroswer.setWebDriver(webDriver);
-        WebDriverWait webDriverWait = new WebDriverWait(webDriver, 20);
+        WebDriverWait webDriverWait = new WebDriverWait(webDriver, 30);
         defaultBroswer.setWebDriverWait(webDriverWait);
         logger.info("init broswer success");
         return defaultBroswer;
@@ -87,7 +97,7 @@ public class DefaultBroswer implements Broswer{
             logger.info("{}={};",m.group(1),m.group(2));
             this.webDriver.manage().addCookie(new Cookie(m.group(1),m.group(2),domain,path,null));
         }
-        System.out.println(this.webDriver.manage().getCookies().toString());
+//        System.out.println(this.webDriver.manage().getCookies().toString());
         return this;
     }
 
@@ -190,6 +200,7 @@ public class DefaultBroswer implements Broswer{
                                                           .getWebDriverWait().until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div#root")));
         System.out.println("正在使用cookie进行登入");
         defaultBroswer.setCookie("z_c0=2|1:0|10:1586685572|4:z_c0|92:Mi4xOExtckJRQUFBQUFBSU55YVVvZ2JFU1lBQUFCZ0FsVk5oRFNBWHdCMGlXUDFiZ2o2elJLYTdWWU9jNU9hUUFkUDZB|489d4fc41438f30abeee3a82b3af0d7c4cb393932e67a0cebf59a620cb651000",".zhihu.com","/").get();
+        defaultBroswer.getWebDriverWait().until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div#root")));
         System.out.println("判断是否登入");
         if (defaultBroswer.isExist("div.SignContainer-content")) {
             System.out.println("cookie登入失败");
@@ -234,6 +245,7 @@ public class DefaultBroswer implements Broswer{
             System.out.println("没有数据");
         }
 
+        defaultBroswer.getWebDriverWait().until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.HotList-list section")));
         List<WebElement> selections = defaultBroswer.cssSelector("div.HotList-list section");
         for (WebElement element:selections) {
             String id = defaultBroswer.cssSelectorOne("div.HotItem-rank", element).getText();
@@ -251,6 +263,6 @@ public class DefaultBroswer implements Broswer{
         }
 
 
-//        defaultBroswer.getWebDriver().quit();
+        defaultBroswer.getWebDriver().quit();
     }
 }

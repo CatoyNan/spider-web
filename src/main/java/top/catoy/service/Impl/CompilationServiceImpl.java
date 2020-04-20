@@ -54,4 +54,28 @@ public class CompilationServiceImpl implements CompilationService {
             return new Response(TaskResultStatusEnum.UNKNOWN_ERROR.getCode(), TaskResultStatusEnum.UNKNOWN_ERROR.getMessage(), null);
         }
     }
+
+    public TaskResult execute2(Task compilationTask) {
+        compilationTask.setRootPath("/Users/admin/Desktop/class");
+        defaultCompileProcessor.setCompilationTask(compilationTask);
+        TaskResult taskResult;
+        try {
+            Class<?> cls;
+            cls = defaultCompileProcessor.run();
+            logger.info("script compile success");
+            compilationTask.setClz(cls);
+            taskResult = defaultInvokeProcessor.run(compilationTask);
+            logger.info("script invoke success");
+            return taskResult;
+        } catch (IllegalArgumentException|InvocationTargetException|NoSuchMethodException e) {
+            logger.error(e.getMessage(), e);
+            return  new TaskResult(null,null,true,false,new StringBuffer(e.getMessage()));
+        } catch (ExecutionException e) {
+            logger.error(e.getMessage(), e);
+            return  new TaskResult(null, null, false, false, new StringBuffer(e.getMessage()));
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return null;
+        }
+    }
 }

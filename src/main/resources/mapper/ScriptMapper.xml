@@ -12,9 +12,10 @@
 		<result  property="methodArgs"  column="method_args"/>
 		<result  property="gmtCreate"  column="gmt_create"/>
 		<result  property="gmtModified"  column="gmt_modified"/>
+		<result  property="className"  column="class_name"/>
 	</resultMap>
     
-    <select id="getScriptById" resultType="top.catoy.entity.Script" >
+    <select id="getScriptById" resultMap="ScriptMap" >
 		SELECT *
 		FROM
 			script
@@ -42,6 +43,7 @@
         	script_content,
         	method_name,
         	method_args,
+        	class_name,
         	gmt_create,
         	gmt_modified
         )
@@ -53,6 +55,7 @@
         	#{scriptContent},
         	#{methodName},
         	#{methodArgs},
+        	#{className},
         	now(),
         	now()
         )

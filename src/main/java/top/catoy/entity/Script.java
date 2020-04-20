@@ -20,6 +20,7 @@ public class Script {
     private String scriptContent;
     private String methodName;
     private String methodArgs;
+    private String className;
 
     public int getId() {
         return Id;
@@ -99,5 +100,13 @@ public class Script {
 
     public void setMethodArgs(String methodArgs) {
         this.methodArgs = methodArgs;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
     }
 }

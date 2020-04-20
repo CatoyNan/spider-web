@@ -38,6 +38,7 @@ public class CompilationTaskController {
     public Response push(@RequestBody @Validated Task compilationTask) {
         Script script = new Script();
         String className = compilationTask.getClassName();
+        script.setClassName(className);
         className = className.replace(".java","");
         script.setMethodName(compilationTask.getMethodName());
         script.setMethodArgs(StringUtils.join(compilationTask.getArgs(),","));
@@ -69,7 +70,7 @@ public class CompilationTaskController {
 
     @PostMapping("/execute")
     public Response execute (@RequestBody @Validated Task compilationTask) {
-        logger.info("compilationTask={}",compilationTask);
+//        logger.info("compilationTask={}",compilationTask);
         return compilationService.execute(compilationTask);
     }
 

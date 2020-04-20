@@ -2,7 +2,6 @@ package top.catoy.service.Impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import top.catoy.dao.JobAndTriggerMapper;
 import top.catoy.dao.ScriptMapper;
 import top.catoy.dao.UserScriptMapper;
 import top.catoy.entity.Script;

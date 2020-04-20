@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.catoy.dao.ResultMapper">
+	<resultMap id="ResultMap"    type="top.catoy.entity.TaskResult2">
+		<result  property="id"  column="id"/>
+		<result  property="taskId"  column="task_id"/>
+		<result  property="resultData"  column="result_data"/>
+		<result  property="resultPrint"  column="result_print"/>
+		<result  property="isCompileSuccess"  column="is_compile_success"/>
+		<result  property="isInvokeSuccess"  column="is_invoke_success"/>
+		<result  property="errorMsg"  column="error_msg"/>
+		<result  property="gmtCreate"  column="gmt_create"/>
+	</resultMap>
+
+    <select id="getRecentResultByTaskId" resultMap="ResultMap" >
+		SELECT *
+		FROM
+			result
+		WHERE task_id  = #{taskId}
+		ORDER BY id desc limit 0,1
+    </select>
+
+	<insert id="addResult" useGeneratedKeys="true" keyProperty="id" parameterType="top.catoy.entity.TaskResult2">
+        INSERT INTO result
+        (
+        	task_id,
+        	result_data,
+        	result_print,
+        	is_compile_success,
+        	is_invoke_success,
+        	error_msg,
+        	gmt_create
+        )
+        VALUES (
+        	#{taskId},
+        	#{resultData},
+        	#{resultPrint},
+        	#{isCompileSuccess},
+        	#{isInvokeSuccess},
+        	#{errorMsg},
+        	now()
+        )
+    </insert>
+</mapper>

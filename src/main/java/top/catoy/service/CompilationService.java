@@ -2,6 +2,7 @@ package top.catoy.service;
 
 import top.catoy.scriptExecution.entity.Task;
 import top.catoy.entity.Response;
+import top.catoy.scriptExecution.entity.TaskResult;
 
 /**
  * @ClassName CompilationService
@@ -17,4 +18,7 @@ public interface CompilationService {
      * @return
      */
     Response execute(Task compilationTask);
+
+    TaskResult execute2(Task compilationTask);
+
 }

@@ -235,6 +235,8 @@ public class RabbitMQConfig {
 
     @Bean
     public AsyncRabbitTemplate asyncRabbitTemplate(RabbitTemplate template, SimpleMessageListenerContainer container) {
-        return new AsyncRabbitTemplate(template, container);
+        AsyncRabbitTemplate asyncRabbitTemplate = new AsyncRabbitTemplate(template, container);
+        asyncRabbitTemplate.setReceiveTimeout(3600000);
+        return asyncRabbitTemplate;
     }
 }

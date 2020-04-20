@@ -1,5 +1,7 @@
 package top.catoy.entity;
 
+import java.io.Serializable;
+
 /**
  * @ClassName Response
  * @Description TODO
@@ -7,7 +9,9 @@ package top.catoy.entity;
  * @Date 2019-11-28 18:31
  * @Version 1.0
  **/
-public class Response {
+public class Response implements Serializable {
+    private static final long serialVersionUID=1L;
+
     private Integer status;
     private String msg;
     private Object data;
@@ -42,4 +46,12 @@ public class Response {
         this.data = data;
     }
 
+    @Override
+    public String toString() {
+        return "Response{" +
+                "status=" + status +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                '}';
+    }
 }

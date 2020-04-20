@@ -46,7 +46,7 @@ public class DefaultInvokeProcessor implements InvokeProsser{
         }
         Object resultData = ClassUtil.invoke(compilationTask.getClz(), methodName, paramTypes, params, resulPrint);
         String resultJsonData = JSON.toJSONString(resultData);
-        logger.info("resultJsonData:" + resultJsonData);
+//        logger.info("resultJsonData:" + resultJsonData);
         return new TaskResult(resultData, resulPrint, true, true, null);
     }
 }
