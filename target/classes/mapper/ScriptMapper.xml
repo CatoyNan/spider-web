@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+<mapper namespace="top.catoy.dao.ScriptMapper">
+	<resultMap id="ScriptMap"    type="top.catoy.entity.Script">
+		<result  property="id"  column="id"/>
+		<result  property="scriptName"  column="script_name"/>
+		<result  property="scriptContent"  column="script_content"/>
+		<result  property="scriptStatus"  column="script_status"/>
+		<result  property="collectCount"  column="collect_count"/>
+		<result  property="permissionType"  column="permission_type"/>
+		<result  property="methodName"  column="method_name"/>
+		<result  property="methodArgs"  column="method_args"/>
+		<result  property="gmtCreate"  column="gmt_create"/>
+		<result  property="gmtModified"  column="gmt_modified"/>
+		<result  property="className"  column="class_name"/>
+	</resultMap>
+    
+    <select id="getScriptById" resultMap="ScriptMap" >
+		SELECT *
+		FROM
+			script
+		WHERE id = #{id}
+    </select>
+
+	<select id="getScriptByUserId" resultMap="ScriptMap">
+		SELECT *
+		FROM script
+		WHERE id
+		IN (
+			SELECT script_id
+			FROM user_script
+			WHERE user_id = #{id}
+		)
+	</select>
+
+	<insert id="addScript" useGeneratedKeys="true" keyProperty="id" parameterType="top.catoy.entity.Script">
+        INSERT INTO script
+        (
+        	script_name,
+        	script_status,
+        	collect_count,
+        	permission_type,
+        	script_content,
+        	method_name,
+        	method_args,
+        	class_name,
+        	gmt_create,
+        	gmt_modified
+        )
+        VALUES (
+        	#{scriptName},
+        	#{scriptStatus},
+        	#{collectCount},
+        	#{permissionType},
+        	#{scriptContent},
+        	#{methodName},
+        	#{methodArgs},
+        	#{className},
+        	now(),
+        	now()
+        )
+    </insert>
+</mapper>

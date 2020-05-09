@@ -1,0 +1,78 @@
+  server:
+    port: 8080
+    tomcat:
+      basedir: logistics/tomcat
+  spring:
+    thymeleaf:
+      cache: false
+    rabbitmq:
+      host: 127.0.0.1
+      port: 5672
+      username: catoy
+      password: 123
+      virtual-host: /test
+      publisher-confirms: true
+    datasource:
+      url: jdbc:mysql://catoy.top/spider?characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+      username: root
+      password: password
+      driver-class-name: com.mysql.jdbc.Driver
+    jackson:
+     date-format: yyyy-MM-dd HH:mm:ss
+     time-zone: GMT+8
+#    datasource:
+#      url: jdbc:mysql://localhost:3306/electronicpostcard
+#      username: root
+#      password: 123456
+#      driver-class-name: com.mysql.jdbc.Driver
+#      tomcat:
+#        max-active: 20
+#        max-idle: 8
+#        min-idle: 5
+#    http:
+#      multipart:
+#        max-file-size: 100Mb
+#        max-request-size: 100Mb
+#    web:
+#      upload-path: /home/admin/card/
+#    #     upload-path: D:/tts/
+#    mvc:
+#      static-path-pattern: /**
+#    resources:
+#      static-locations: classpath:/META-INF/resources/,classpath:/resources/,
+#        classpath:/static/,classpath:/public/,file:/home/admin/card/
+  #    static-locations: classpath:/META-INF/resources/,classpath:/resources/,
+  #                           classpath:/static/,classpath:/public/,file:D:/tts/
+
+  mybatis:
+    mapper-locations: classpath:mapper/*.xml
+    configuration:
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    type-aliases-package: top.catoy
+
+  com:
+    sxito:
+      custom:
+        windows-path: d://sxito/
+        linux-path: /sxito/
+        mac-path: /Users/admin/work/test/sxito/
+        windows-backupPath: d://backup/
+        linux-backupPath: /backup/
+        max-backupPath: /Users/admin/work/test/backup/
+        keys: fourzeroeight
+
+#  logging:
+#    config: classpath:log4j.xml
+
+  jackson:
+    serialization: FAIL_ON_EMPTY_BEANS:false
+#level:
+#      root: debug
+##      com.bestvike: debug
+##      org.springframework.security: warn
+#    # 默认日志文件名
+#    # file: log
+#    # 默认日志路径
+#    # path: ./log
+#    # logback.xml路径，默认为classpath:logback.xml
+#     config: ./log4j.properties

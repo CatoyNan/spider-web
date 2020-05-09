@@ -65,7 +65,7 @@ public class JobController {
         //表达式调度构建器(即任务执行的时间)
         CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(task.getCronExpression());
 
-        //按新的cronExpression表达式构建一个新的trigger
+        //构建一个新的trigger
         CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(task.getJobClassName(), task.getJobGroup())
                 .withSchedule(scheduleBuilder).build();
 

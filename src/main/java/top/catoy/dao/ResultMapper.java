@@ -14,5 +14,7 @@ import top.catoy.scriptExecution.entity.TaskResult;
 public interface ResultMapper {
     TaskResult getRecentResultByTaskId(int taskId);
 
+    TaskResult2 getResultByTaskIdAndNumber(String taskId,int number);
+
     int addResult(TaskResult2 taskResult);
 }

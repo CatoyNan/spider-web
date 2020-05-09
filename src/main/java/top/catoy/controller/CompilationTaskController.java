@@ -6,8 +6,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import top.catoy.dao.ResultMapper;
 import top.catoy.entity.Script;
+import top.catoy.entity.TaskResult2;
 import top.catoy.scriptExecution.entity.Task;
+import top.catoy.scriptExecution.entity.TaskResult;
 import top.catoy.scriptExecution.enums.TaskResultStatusEnum;
 import top.catoy.entity.Response;
 import top.catoy.service.CompilationService;
@@ -33,6 +36,9 @@ public class CompilationTaskController {
 
     @Autowired
     ScriptService scriptService;
+
+    @Autowired
+    ResultMapper resultMapper;
 
     @PostMapping("/push")
     public Response push(@RequestBody @Validated Task compilationTask) {
@@ -72,6 +78,16 @@ public class CompilationTaskController {
     public Response execute (@RequestBody @Validated Task compilationTask) {
 //        logger.info("compilationTask={}",compilationTask);
         return compilationService.execute(compilationTask);
+    }
+
+    /**
+     * 获取客户的所有脚本
+     * @return
+     */
+    @GetMapping("/getTaskResult")
+    public Object getTaskResult(@RequestParam String taskId,@RequestParam int number) {
+        TaskResult2 result = resultMapper.getResultByTaskIdAndNumber(taskId, number);
+        return result;
     }
 
 

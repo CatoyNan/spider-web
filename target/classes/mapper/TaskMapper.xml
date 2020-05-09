@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.catoy.dao.TaskMapper">
+	<resultMap id="TaskMap"    type="top.catoy.entity.Task">
+		<result  property="id"  column="id"/>
+		<result  property="userId"  column="script_name"/>
+		<result  property="scriptId"  column="script_id"/>
+		<result  property="taskStatus"  column="task_status"/>
+		<result  property="executionsTime"  column="executions_time"/>
+		<result  property="cronExpression"  column="cron_expression"/>
+		<result  property="url"  column="url"/>
+		<result  property="jobGroup"  column="job_group"/>
+		<result  property="jobClassName"  column="job_class_name"/>
+		<result  property="callBack"  column="call_back"/>
+		<result  property="jobName"  column="job_name"/>
+		<result  property="recentStatus"  column="recent_status"/>
+		<result  property="gmtCreate"  column="gmt_create"/>
+		<result  property="gmtModified"  column="gmt_modified"/>
+	</resultMap>
+
+	<insert id="addTask" useGeneratedKeys="true" keyProperty="id" parameterType="top.catoy.entity.Task">
+        INSERT INTO task
+        (
+        	user_id,
+        	script_id,
+        	task_status,
+        	recent_status,
+        	executions_time,
+        	cron_expression,
+        	url,
+        	job_group,
+        	job_name,
+        	job_class_name,
+        	gmt_create,
+        	gmt_modified
+        )
+        VALUES (
+        	#{userId},
+        	#{scriptId},
+        	#{taskStatus},
+        	#{recentStatus},
+        	#{executionsTime},
+        	#{cronExpression},
+        	#{url},
+        	#{jobGroup},
+        	#{jobName},
+        	#{jobClassName},
+        	now(),
+        	now()
+        )
+    </insert>
+
+	<select id="getTaskByJobName" resultMap="TaskMap">
+		SELECT *
+		FROM task
+		WHERE job_name = #{jobName}
+	</select>
+
+	<delete id="deleteJobByJobName">
+		DELETE
+		FROM task
+		WHERE job_name = #{jobName}
+	</delete>
+
+	<update id="updateTaskStatusByJobName">
+		UPDATE task
+		SET task_status = #{status}
+		WHERE job_name = #{jobName}
+	</update>
+
+
+	<update id="updateTaskRecentStatusByJobName">
+		UPDATE task
+		SET recent_status = #{recentStatus},
+			gmt_modified = now()
+		WHERE job_name = #{jobName}
+	</update>
+</mapper>

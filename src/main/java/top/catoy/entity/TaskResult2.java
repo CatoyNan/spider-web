@@ -29,6 +29,9 @@ public class TaskResult2 implements Serializable {
         this.errorMsg = errorMsg;
     }
 
+    public TaskResult2() {
+    }
+
     public int getId() {
         return id;
     }
